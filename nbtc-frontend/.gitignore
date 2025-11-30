@@ -1,0 +1,28 @@
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.packages
+.pub-cache/
+flutter_*.png
+linked_script_messages.json
+unlinked_spec.dill
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
+# Flutter specific
+build/
+.ios/
+.android/
+
+# macOS
+.DS_Store
+
+# Env files
+.env

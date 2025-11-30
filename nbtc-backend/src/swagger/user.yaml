@@ -1,0 +1,30 @@
+paths:
+  /users:
+    get:
+      summary: Get all users
+      tags:
+        - User
+      responses:
+        "200":
+          description: List of users
+    post:
+      summary: Create new user
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                fullName:
+                  type: string
+                gender:
+                  type: string
+                  enum: [F, M, Other]
+      responses:
+        "201":
+          description: Created

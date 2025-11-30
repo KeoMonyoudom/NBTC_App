@@ -1,0 +1,50 @@
+name: nbtc
+services:
+  nbtc-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nbtc-api
+    restart: always
+    ports:
+      - 8081:8081
+    volumes:
+      - ./src:/app/src
+      - .env:/app/.env
+    depends_on:
+      - nbtc-db
+      - file-server
+    scale: 1
+    networks:
+      - nbtc-network
+  nbtc-db:
+    image: mongo:8.0.12-noble
+    container_name: nbtc-db
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - nbtc-db-data:/data/db
+    networks:
+      - nbtc-network
+  file-server:
+    image: minio/minio
+    container_name: nbtc-file-server
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - nbtc-minio-data:/data
+    networks:
+      - nbtc-network
+    command: server /data --console-address ":9001"
+volumes:
+  nbtc-db-data:
+  nbtc-minio-data:
+networks:
+  nbtc-network:
+    driver: bridge
